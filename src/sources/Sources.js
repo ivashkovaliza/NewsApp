@@ -1,4 +1,5 @@
 import './sources.scss';
+import CONSTANTS from 'constants.js';
 
 export default class Sources {
   async getSourcesAsync(url) {
@@ -8,19 +9,18 @@ export default class Sources {
   }
 
   init(handler) {
-    const urlSources = 'https://newsapi.org/v2/sources?apiKey=83c8aebd6ec444179f992b3fc49b9b3f';
+    const urlSources = `https://newsapi.org/v2/sources?apiKey=${CONSTANTS.APIKEY}`;
 
     this.getSourcesAsync(urlSources)
       .then(data => {
         this.drawNewsSources(data.sources);
-        document.querySelectorAll('.dropdown-content__item').forEach((element) => {
-          element.addEventListener('click', handler);
-        });
+        document.querySelector('.nav-wrapper').addEventListener('click', handler);
       });
   }
 
-  drawAlphabetNav (navItemsNamesArr, navItemElement, sourceFirstLetter) {
+  drawAlphabetNav(navItemsNamesArr, navItemElement, sourceFirstLetter) {
     const nav = document.querySelector('.nav-wrapper');
+    const menuBtn = document.querySelector('.menu-btn');
 
     if (!navItemsNamesArr.includes(sourceFirstLetter)) {
       navItemsNamesArr.push(sourceFirstLetter);
@@ -28,6 +28,8 @@ export default class Sources {
       navItemElement.querySelector('.dropdown-content').setAttribute('id', `${sourceFirstLetter}-sources`);
       nav.appendChild(navItemElement);
     }
+
+    menuBtn.addEventListener('click', this.changeSourcesPresentation);
   }
 
   drawNewsSources(sourcesArr) {
@@ -46,5 +48,14 @@ export default class Sources {
       sourceItemElement.querySelector('.dropdown-content__item').setAttribute('id', element.id);
       document.querySelector(`#${sourceFirstLetter}-sources`).appendChild(sourceItemElement);
     });
+  }
+
+  changeSourcesPresentation() {
+    const nav = document.getElementById("topNav");
+    if (nav.className === "nav-wrapper") {
+      nav.className += " responsive";
+    } else {
+      nav.className = "nav-wrapper";
+    }
   }
 }
