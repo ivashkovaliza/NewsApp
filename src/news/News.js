@@ -33,6 +33,17 @@ export default class News {
     const tmpl = document.querySelector('#newsItemTemplate');
     const newsContainer = document.querySelector('.news');
 
+    if(!newsArr.length) {
+      const h2 = document.createElement('h2');
+      const noNewsMessage = 'Sorry, there are no news on this channel yet.';
+
+      h2.className  = 'error-message';
+      h2.innerHTML = noNewsMessage;
+      newsContainer.appendChild(h2);
+
+      return;
+    }
+
     newsArr.forEach(element => {
       const newsElement = tmpl.content.cloneNode(true);
       const newsDescription = this.createNewsDescription(element.description);

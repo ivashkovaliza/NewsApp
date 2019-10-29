@@ -3,6 +3,11 @@
   justify-content: center;
   flex-wrap: wrap;
 
+  .error-message {
+    padding: 450px 20px 20px;
+    text-align: center;
+  }
+
   &__item {
     position: relative;
     height: 380px;
@@ -99,6 +104,14 @@
     &:hover .news__item-date,
     &.hover .news__item-date {
       transform: translateY(-100%);
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .news {
+    .error-message {
+      padding-top: 300px;
     }
   }
 }
