@@ -34,19 +34,15 @@ export default class News {
     const newsContainer = document.querySelector('.news');
 
     if(!newsArr.length) {
-      const h2 = document.createElement('h2');
-      const noNewsMessage = 'Sorry, there are no news on this channel yet.';
-
-      h2.className  = 'error-message';
-      h2.innerHTML = noNewsMessage;
-      newsContainer.appendChild(h2);
+      this.showNoNewsMessage(newsContainer);
 
       return;
     }
 
     newsArr.forEach(element => {
       const newsElement = tmpl.content.cloneNode(true);
-      const newsDescription = this.createNewsDescription(element.description);
+      const receivedDescription = element.description || '';
+      const newsDescription = this.createNewsDescription(receivedDescription);
       const date = new Date(element.publishedAt);
 
       newsElement.querySelector('.news__item-img').setAttribute('src', element.urlToImage ? element.urlToImage : 'https://picsum.photos/1200/630');
@@ -60,13 +56,22 @@ export default class News {
     });
   }
 
+  showNoNewsMessage(newsContainer) {
+    const h2 = document.createElement('h2');
+    const noNewsMessage = 'Sorry, there are no news on this channel yet.';
+
+    h2.className  = 'error-message';
+    h2.innerHTML = noNewsMessage;
+    newsContainer.appendChild(h2);
+  }
+
   clearNews() {
     document.querySelector('.news').innerHTML = '';
   }
 
   createNewsDescription (description) {
     const maxNumberOfCharacters = 120;
-    const isValidDescription = description.length && description.description < maxNumberOfCharacters;
+    const isValidDescription = description.length < maxNumberOfCharacters;
 
     return isValidDescription ? description : `${description.slice(0, maxNumberOfCharacters - 1)}...`;
   }
