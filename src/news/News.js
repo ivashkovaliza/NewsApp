@@ -1,7 +1,8 @@
 import './news.scss';
+import CONSTANTS from 'constants.js';
 
 export default class News {
-  constructor () {
+  constructor() {
     this.showNews = this.showNews.bind(this);
   }
 
@@ -11,15 +12,22 @@ export default class News {
     return data;
   }
 
-  showNews (event) {
-    const urlNews = `https://newsapi.org/v2/everything?sources=${event.target.getAttribute('id')}&pageSize=10&apiKey=83c8aebd6ec444179f992b3fc49b9b3f`;
-    this.getNewsAsync(urlNews)
-      .then(data => {
+  showNews(event) {
+    const eventTarget = event.target;
+
+    if(eventTarget.matches('.dropdown-content__item')) {
+      const sourceId = eventTarget.getAttribute('id');
+      const pageSize = 10;
+      const urlNews = `https://newsapi.org/v2/everything?sources=${sourceId}&pageSize=${pageSize}&apiKey=${CONSTANTS.APIKEY}`;
+
+      this.getNewsAsync(urlNews)
+        .then(data => {
           this.drawNews(data.articles);
-      });
+        });
+    }
   }
 
-  drawNews (newsArr) {
+  drawNews(newsArr) {
     this.clearNews();
 
     const tmpl = document.querySelector('#newsItemTemplate');
@@ -41,11 +49,14 @@ export default class News {
     });
   }
 
-  clearNews () {
+  clearNews() {
     document.querySelector('.news').innerHTML = '';
   }
 
   createNewsDescription (description) {
-    return description.length && description.description < 120 ? description : description.slice(0, 119) + '...';
+    const maxNumberOfCharacters = 120;
+    const isValidDescription = description.length && description.description < maxNumberOfCharacters;
+
+    return isValidDescription ? description : `${description.slice(0, maxNumberOfCharacters - 1)}...`;
   }
 }
