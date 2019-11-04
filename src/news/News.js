@@ -2,14 +2,9 @@ import './news.scss';
 import CONSTANTS from 'constants.js';
 
 export default class News {
-  constructor() {
+  constructor(loader) {
+    this.loader = loader;
     this.showNews = this.showNews.bind(this);
-  }
-
-  async getNewsAsync(url) {
-    let response = await fetch(url);
-    let data = await response.json();
-    return data;
   }
 
   showNews(event) {
@@ -17,10 +12,8 @@ export default class News {
 
     if(eventTarget.matches('.dropdown-content__item')) {
       const sourceId = eventTarget.getAttribute('id');
-      const pageSize = 10;
-      const urlNews = `https://newsapi.org/v2/everything?sources=${sourceId}&pageSize=${pageSize}&apiKey=${CONSTANTS.APIKEY}`;
 
-      this.getNewsAsync(urlNews)
+      this.loader.getNews(sourceId)
         .then(data => {
           this.drawNews(data.articles);
         });

@@ -2,16 +2,13 @@ import './sources.scss';
 import CONSTANTS from 'constants.js';
 
 export default class Sources {
-  async getSourcesAsync(url) {
-    let response = await fetch(url);
-    let data = await response.json();
-    return data;
+
+  constructor(loader) {
+    this.loader = loader;
   }
 
   init(handler) {
-    const urlSources = `https://newsapi.org/v2/sources?apiKey=${CONSTANTS.APIKEY}`;
-
-    this.getSourcesAsync(urlSources)
+    this.loader.getSources()
       .then(data => {
         this.drawNewsSources(data.sources);
         document.querySelector('.nav-wrapper').addEventListener('click', handler);
