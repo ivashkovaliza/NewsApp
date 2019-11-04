@@ -2,7 +2,6 @@ import './sources.scss';
 import CONSTANTS from 'constants.js';
 
 export default class Sources {
-
   constructor(loader) {
     this.loader = loader;
   }

@@ -1,12 +1,12 @@
 import ErrorHandlerPopup from 'core/ErrorHandlerPopup';
 
 export default class Loader {
-  // constructor() {
-  //   this.getResponse = this.Factory('GET');
-  // }
+  constructor() {
+    this.getResponse = this.Factory('GET');
+  }
 
-  async getData(url)  {
-    let response = await fetch(url);
+  async getData(url, options) {
+    let response = await fetch(url, options);
 
     if (response.ok) {
       let data = await response.json();
@@ -16,11 +16,20 @@ export default class Loader {
     }
   }
 
-  // Factory(method) {
-  //   switch (method) {
-  //     case 'GET':
-  //       const options =
-  //       break;
-  //   }
-  // }
+  Factory(method) {
+    switch (method) {
+      case 'GET': {
+        return (url) => {
+          const options = { method: 'GET' };
+             return this.getData(url);
+        }
+      }
+      // case 'POST': {
+      // }
+      // case 'PUT': {
+      // }
+      // case 'DELETE': {
+      // }
+    }
+  }
 }
