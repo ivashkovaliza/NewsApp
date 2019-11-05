@@ -1,5 +1,5 @@
 export default class ErrorPopup {
     showErrorPopup() {
-        alert('Error');
+        alert('Error from server');
     }
 }

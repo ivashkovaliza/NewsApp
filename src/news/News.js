@@ -1,5 +1,4 @@
 import './news.scss';
-import CONSTANTS from 'constants.js';
 
 export default class News {
   constructor(loader) {
