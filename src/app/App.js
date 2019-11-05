@@ -1,23 +1,15 @@
-import Sources from 'sources/sources.js';
-import News from 'news/news.js';
-import LoaderForNewsApi from 'core/LoaderForNewsApi';
+import AppView from "app/AppView";
+import AppModel from "app/AppModel";
+import AppController from "app/AppController";
 
 export default class App {
-  //getData????
-  /*init() {
-    const loader =  new LoaderForNewsApi();
-    const sources = new Sources(loader);
-    const news = new News(loader);
-    sources.init(news.showNews);
-  }*/
-  async getData(url, options) {
-    let response = await fetch(url, options);
-
-    if(response.ok) {
-      let data = await response.json();
-      return {data};
-    } else {
-      return {error: true};
+    constructor() {
+        this.view = new AppView();
+        this.model = new AppModel(this.view);
+        this.controller = new AppController(this.model);
     }
-  }
+
+    init() {
+        this.controller.run()
+    }
 }

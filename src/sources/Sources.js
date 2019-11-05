@@ -1,18 +1,6 @@
 import './sources.scss';
-import CONSTANTS from 'constants.js';
 
 export default class Sources {
-  constructor(loader) {
-    this.loader = loader;
-  }
-
-  init(handler) {
-    this.loader.getSources()
-      .then(data => {
-        this.drawNewsSources(data.sources);
-        document.querySelector('.nav-wrapper').addEventListener('click', handler);
-      });
-  }
 
   drawAlphabetNav(navItemsNamesArr, navItemElement, sourceFirstLetter) {
     const nav = document.querySelector('.nav-wrapper');

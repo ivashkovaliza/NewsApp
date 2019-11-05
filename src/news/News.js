@@ -1,24 +1,6 @@
 import './news.scss';
 
 export default class News {
-  constructor(loader) {
-    this.loader = loader;
-    this.showNews = this.showNews.bind(this);
-  }
-
-  showNews(event) {
-    const eventTarget = event.target;
-
-    if(eventTarget.matches('.dropdown-content__item')) {
-      const sourceId = eventTarget.getAttribute('id');
-
-      this.loader.getNews(sourceId)
-        .then(data => {
-          this.drawNews(data.articles);
-        });
-    }
-  }
-
   drawNews(newsArr) {
     this.clearNews();
 
