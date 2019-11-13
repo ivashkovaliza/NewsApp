@@ -1,10 +1,15 @@
-import Sources from 'sources/sources.js';
-import News from 'news/news.js';
+import AppView from "app/AppView";
+import AppModel from "app/AppModel";
+import AppController from "app/AppController";
 
 export default class App {
-  init() {
-    const sources = new Sources();
-    const news = new News();
-    sources.init(news.showNews);
-  }
+    constructor() {
+        this.view = new AppView();
+        this.model = new AppModel(this.view);
+        this.controller = new AppController(this.model);
+    }
+
+    init() {
+        this.controller.run()
+    }
 }
